@@ -229,12 +229,15 @@ def initialize_environment():
 
 def mount_google_drive(google_drive_directory):
 
-    # Set up google drive
-    from google.colab import drive
-    drive.mount('/content/gdrive/')
+    google_drive_directory = google_drive_directory.strip()
+    if google_drive_directory != "":
 
-    working_dir = f"/content/gdrive/MyDrive/{google_drive_directory}"
-    os.system(f"mkdir -p {working_dir}")
-    os.chdir(working_dir)
+        # Set up google drive
+        from google.colab import drive
+        drive.mount('/content/gdrive/')
+
+        working_dir = f"/content/gdrive/MyDrive/{google_drive_directory}"
+        os.system(f"mkdir -p {working_dir}")
+        os.chdir(working_dir)
     
     print(f"Working directory: {os.getcwd()}")
