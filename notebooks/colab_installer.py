@@ -21,6 +21,7 @@ import os
 os.chdir("/content/")
 
 import topiary
+topiary._in_notebook = "colab"
 import colab_installer
 colab_installer.initialize_environment()
 colab_installer.mount_google_drive(google_drive_directory)
@@ -234,8 +235,6 @@ def initialize_environment():
         os.environ["PYTHONPATH"] = ""
         os.environ["PYTHONSTARTUP"] = "/content/software/python_startup.py"
         os.environ["TOPIARY_MAX_SLOTS"] = "1"
-
-        topiary._in_notebook = "colab"
 
         to_append = '/usr/local/lib/python3.8/site-packages'
         if to_append not in sys.path:
