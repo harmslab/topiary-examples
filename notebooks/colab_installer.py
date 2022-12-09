@@ -17,17 +17,17 @@ colab_installer.install_topiary(install_raxml,install_generax)
 
 Cell #2:
 #-------------------------------------------------------------------------------
+import topiary
+import numpy as np
+import pandas as pd
+
 import os
 os.chdir("/content/")
 
-import topiary
 topiary._in_notebook = "colab"
 import colab_installer
 colab_installer.initialize_environment()
 colab_installer.mount_google_drive(google_drive_directory)
-
-import numpy as np
-import pandas as pd
 #-------------------------------------------------------------------------------
 
 
@@ -46,15 +46,6 @@ import subprocess
 import time
 import os
 import re
-
-try:
-    import google.colab
-    RUNNING_IN_COLAB = True
-except ImportError:
-    RUNNING_IN_COLAB = False
-except Exception as e: 
-    err = "Could not figure out if runnning in a colab notebook\n"
-    raise Exception(err) from e
 
 miniconda = \
 """
@@ -175,83 +166,75 @@ def _run_install_cmd(bash_to_run,description):
 
 def install_topiary(install_raxml,install_generax):
 
-    if RUNNING_IN_COLAB:
+    os.chdir("/content/")
 
-        os.chdir("/content/")
+    description_list = ["miniconda","conda packages","pip packages"]
+                    
+    cmd_list = [miniconda,conda_packages,pip_packages]
 
-        description_list = ["miniconda","conda packages","pip packages"]
-                        
-        cmd_list = [miniconda,conda_packages,pip_packages]
+    if install_raxml:
+        description_list.append("raxml-ng")
+        cmd_list.append(raxml)
 
-        if install_raxml:
-            description_list.append("raxml-ng")
-            cmd_list.append(raxml)
+    if install_generax:
+        description_list.append("generax")
+        cmd_list.append(generax)
 
-        if install_generax:
-            description_list.append("generax")
-            cmd_list.append(generax)
+    description_list.append("topiary")
+    cmd_list.append(topiary)
 
-        description_list.append("topiary")
-        cmd_list.append(topiary)
+    print("Setting up environment.",flush=True)
 
-        print("Setting up environment.",flush=True)
+    # Make software directory (if not already there)
+    os.system("mkdir -p software")
 
-        # Make software directory (if not already there)
-        os.system("mkdir -p software")
+    # Add conda path to the current python session
+    to_append = "/usr/local/lib/python3.8/site-packages"
+    if to_append not in sys.path:
+        sys.path.append(to_append)
 
-        # Add conda path to the current python session
-        to_append = "/usr/local/lib/python3.8/site-packages"
-        if to_append not in sys.path:
-            sys.path.append(to_append)
-
-        # Make sure that any new python session that spools up during the installations
-        # has the correct site packages. 
-        os.environ["PYTHONSTARTUP"] = "/content/software/python_startup.py"
-        f = open("/content/software/python_startup.py","w")
-        f.write("import sys\n")
-        f.write("sys.path.append('/usr/local/lib/python3.8/site-packages')\n")
-        f.close()
+    # Make sure that any new python session that spools up during the installations
+    # has the correct site packages. 
+    os.environ["PYTHONSTARTUP"] = "/content/software/python_startup.py"
+    f = open("/content/software/python_startup.py","w")
+    f.write("import sys\n")
+    f.write("sys.path.append('/usr/local/lib/python3.8/site-packages')\n")
+    f.close()
 
 
-        # Install each package
-        pbar = tqdm(range(len(cmd_list)))
-        for i in pbar:
-            _run_install_cmd(cmd_list[i],description_list[i])
+    # Install each package
+    pbar = tqdm(range(len(cmd_list)))
+    for i in pbar:
+        _run_install_cmd(cmd_list[i],description_list[i])
 
-            # Update status bar
-            pbar.refresh()
-            time.sleep(0.5)
-            
-        # This sleep step makes sure things are done writing to the display before
-        # reset
-        time.sleep(2)
-        os._exit(0)
+        # Update status bar
+        pbar.refresh()
+        time.sleep(0.5)
+        
+    # This sleep step makes sure things are done writing to the display before
+    # reset
+    time.sleep(2)
+    os._exit(0)
 
 
 def initialize_environment():
-
-    if RUNNING_IN_COLAB:
         
-        os.environ["PYTHONPATH"] = ""
-        os.environ["PYTHONSTARTUP"] = "/content/software/python_startup.py"
-        os.environ["TOPIARY_MAX_SLOTS"] = "1"
+    os.environ["PYTHONPATH"] = ""
+    os.environ["PYTHONSTARTUP"] = "/content/software/python_startup.py"
+    os.environ["TOPIARY_MAX_SLOTS"] = "1"
 
-        to_append = '/usr/local/lib/python3.8/site-packages'
-        if to_append not in sys.path:
-            sys.path.append(to_append)
-
-        os.chdir("/content/")
+    to_append = '/usr/local/lib/python3.8/site-packages'
+    if to_append not in sys.path:
+        sys.path.append(to_append)
 
 def mount_google_drive(google_drive_directory):
 
     # Set up google drive
-    if RUNNING_IN_COLAB and google_drive_directory:
+    from google.colab import drive
+    drive.mount('/content/gdrive/')
 
-        from google.colab import drive
-        drive.mount('/content/gdrive/')
-
-        working_dir = f"/content/gdrive/MyDrive/{google_drive_directory}"
-        os.system(f"mkdir -p {working_dir}")
-        os.chdir(working_dir)
-        
+    working_dir = f"/content/gdrive/MyDrive/{google_drive_directory}"
+    os.system(f"mkdir -p {working_dir}")
+    os.chdir(working_dir)
+    
     print(f"Working directory: {os.getcwd()}")
