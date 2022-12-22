@@ -13,7 +13,7 @@ the notebooks requires you to [install topiary](https://topiary-asr.readthedocs.
 
 ### Seed to alignment
 
-<a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/01_seed_to_alignment.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+<a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/seed-to-alignment.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 [Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/01_seed_to_alignment.ipynb)
 walks through how to make a seed dataset for use in a topiary analysis, then
