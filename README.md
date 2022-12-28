@@ -15,7 +15,7 @@ the notebooks requires you to [install topiary](https://topiary-asr.readthedocs.
 
 <a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/seed-to-alignment.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-[Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/01_seed_to_alignment.ipynb)
+[Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/seed-to-alignment.ipynb)
 walks through how to make a seed dataset for use in a topiary analysis, then
 demonstrates the `seed_to_alignment` pipeline that takes a seed dataset with a
 handful of sequences and generates a large multiple sequence alignment. 
@@ -23,9 +23,9 @@ handful of sequences and generates a large multiple sequence alignment.
 
 ### Alignment to ancestors
 
-<a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/03_alignment_to_ancestors.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+<a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/alignment-to-ancestors.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-[Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/03_alignment_to_ancestors.ipynb)
+[Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/alignment-to-ancestors.ipynb)
 shows how to go from a topiary alignment to ancestral sequences. 
 It demonstrates the `alignment_to_ancestors` pipeline, which identifies
 the maximum likelihood phylogenetic model, generates a maximum likelihood gene
@@ -34,3 +34,9 @@ ancestral sequences. It also demonstrates the `bootstrap_reconcile` function,
 which generates bootstrap supports on the reconciled gene/species tree. 
 
 
+### API example: Seed to alignment
+
+<a href="https://githubtocolab.com/harmslab/topiary-examples/blob/main/notebooks/seed-to-alignment_api-example.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+[Notebook](https://github.com/harmslab/topiary-examples/blob/main/notebooks/seed-to-alignment_api-example.ipynb)
+Demonstrates the steps of the `seed_to_alignment` pipeline as individual API calls. 
